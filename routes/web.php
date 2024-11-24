@@ -32,6 +32,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('users', [UserController::class, 'index'])->name('users.index');
     Route::get('users/add', [UserController::class, 'create'])->name('users.add');
+    Route::get('users/import', [UserController::class, 'import'])->name('users.import');
     Route::post('users/add', [UserController::class, 'store'])->name('users.register');
     Route::get('users/{id}', [UserController::class, 'edit'])->name('users.edit');
     Route::patch('users', [UserController::class, 'update'])->name('users.update');

@@ -25,6 +25,7 @@ class UserFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
+            'last_name' => $this->faker->lastName(),
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'), // Genera una contraseña encriptada

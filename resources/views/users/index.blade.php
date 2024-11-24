@@ -1,55 +1,73 @@
 <x-admin-layout>
     <div class="py-12 flex items-center justify-center w-full h-full max-h-screen">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="flex py-2">
-                <h1 class="text-2xl flex-1 uppercase tracking-widest">Tabla de Usuarios</h1>
-                <a href="{{route('users.add')}}">
-                    <x-secondary-button>
-                        {{ __('Agregar un nuevo usuario.') }}
-                    </x-secondary-button>
-                </a>
-            </div>
+        <div class="max-w-7xl w-full mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="py-2 space-y-5">
+                    <h1 class="text-4xl flex-1 uppercase text-center tracking-widest">Usuarios activos</h1>
+                    <div class="flex gap-2 w-full px-5">
+                        <a href="{{ route('users.import') }}" class="w-full">
+                            <x-secondary-button class="w-full justify-center">
+                                {{ __('Agregar usuarios desde un archivo excel.') }}
+                            </x-secondary-button>
+                        </a>
+                        <a href="{{ route('users.add') }}" class="w-full">
+                            <x-primary-button class="w-full justify-center">
+                                {{ __('Agregar un nuevo usuario.') }}
+                            </x-primary-button>
+                        </a>
+                    </div>
+                </div>
                 <div class="overflow-hidden overflow-x-auto p-6 bg-white border-b border-gray-200">
                     <div class="min-w-full align-middle">
                         <table class="min-w-full divide-y divide-gray-200 border">
                             <thead>
-                            <tr class=" bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                <th class="px-6 py-3">
-                                    Nombre
-                                </th>
-                                <th class="px-6 py-3">
-                                    Correo
-                                </th>
-                                <th class="px-6 py-3">
-                                    Puesto
-                                </th>
-                                <th class="px-6 py-3">
-                                    Acciones
-                                </th>
-                            </tr>
+                                <tr
+                                    class=" bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                    <th class="px-6 py-3">
+                                        Nombre
+                                    </th>
+                                    <th class="px-6 py-3">
+                                        Apellidos
+                                    </th>
+                                    <th class="px-6 py-3">
+                                        Correo
+                                    </th>
+                                    <th class="px-6 py-3">
+                                        Puesto
+                                    </th>
+                                    <th class="px-6 py-3">
+                                        Acciones
+                                    </th>
+                                </tr>
                             </thead>
 
                             <tbody class="bg-white divide-y divide-gray-200 divide-solid">
-                            @foreach($users as $user)
-                                <tr class="bg-white whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                    <td class="px-6 py-4 ">
-                                        {{ $user->name }}
-                                    </td>
-                                    <td class="px-6 py-4 ">
-                                        {{ $user->email }}
-                                    </td>
-                                    <td class="px-6 py-4 ">
-                                        {{ $user->puesto }}
-                                    </td>
-                                    <td class="text-center text-base">
-                                        <a href="{{route('users.edit',$user->id)}}">
-                                            <i role="button" class="fa-solid fa-pen-to-square hover:opacity-50 mr-4"></i>
-                                        </a>
-                                        <i x-data="" x-on:click.prevent="$dispatch('open-modal', { name: 'prestamo-deletion', id: '{{$user->id}}' })" role="button" class="fa-solid fa-trash hover:opacity-50 text-red-500"></i>
-                                    </td>
-                                </tr>
-                            @endforeach
+                                @foreach ($users as $user)
+                                    <tr class="bg-white whitespace-no-wrap text-sm leading-5 text-gray-900">
+                                        <td class="px-6 py-4 ">
+                                            {{ $user->name }}
+                                        </td>
+                                        <td class="px-6 py-4 ">
+                                            {{ $user->last_name }}
+                                        </td>
+                                        <td class="px-6 py-4 ">
+                                            {{ $user->email }}
+                                        </td>
+                                        <td class="px-6 py-4 ">
+                                            {{ $user->puesto }}
+                                        </td>
+                                        <td class="text-center text-base">
+                                            <a href="{{ route('users.edit', $user->id) }}">
+                                                <i role="button"
+                                                    class="fa-solid fa-pen-to-square hover:opacity-50 mr-4"></i>
+                                            </a>
+                                            <i x-data=""
+                                                x-on:click.prevent="$dispatch('open-modal', { name: 'prestamo-deletion', id: '{{ $user->id }}' })"
+                                                role="button"
+                                                class="fa-solid fa-trash hover:opacity-50 text-red-500"></i>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -78,13 +96,8 @@
             <div class="mt-6">
                 <x-input-label for="password" value="{{ __('Password') }}" class="sr-only" />
 
-                <x-text-input
-                    id="password"
-                    name="password"
-                    type="password"
-                    class="mt-1 block w-3/4"
-                    placeholder="{{ __('Password') }}"
-                />
+                <x-text-input id="password" name="password" type="password" class="mt-1 block w-3/4"
+                    placeholder="{{ __('Password') }}" />
 
                 <x-input-error :messages="$errors->userDeletion->get('password')" class="mt-2" />
             </div>
@@ -100,4 +113,4 @@
             </div>
         </form>
     </x-modal>
-</x-app-layout>
+    </x-app-layout>

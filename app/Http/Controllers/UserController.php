@@ -18,6 +18,11 @@ class UserController extends Controller
         return view('users.index', compact('users'));
     }
 
+    public function import(): View
+    {
+        return view('users.import-excel');
+    }
+
     public function create(): View
     {
         $user = null;
