@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Http;
 
-class ResenasController extends Controller
+class GuestController extends Controller
 {
-    public function index()
+    public function reseñas()
     {
         // Datos de ejemplo de reseñas
         $reviews = [
@@ -37,5 +37,15 @@ class ResenasController extends Controller
             $reviews[$key]['photo'] = $photoUrl;  // Asigna la foto a la reseña
         }
         return view('reviews', compact('reviews'));
+    }
+
+    public function home()
+    {
+        return view('home');
+    }
+
+    public function proposito()
+    {
+        return view('proposito');
     }
 }

@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\UsersImport;
+use App\Exports\FailedRowsExport;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Validation\Rules;
+use Maatwebsite\Excel\Facades\Excel;
 
 
 class UserController extends Controller
@@ -22,6 +25,37 @@ class UserController extends Controller
     {
         return view('users.import-excel');
     }
+
+    public function importRegister(Request $request): RedirectResponse
+    {
+        try {
+
+            $request->validate([
+                'formateo' => ['required', 'string', 'in:definido,default'],
+                'excel_usuarios' => ["required", "file", "mimes:xlsx,xls,csv"],
+            ]);
+            $typeFormateo = $request->get('formateo');
+            $password = null;
+            if ($typeFormateo == "default") {
+                $request->validate([
+                    'password' => ['required', Rules\Password::defaults()],
+                ]);
+                $password = $request->get('password');
+            }
+            $import = new UsersImport($password);
+            Excel::import($import, $request->file('excel_usuarios'));
+            if ($import->failures()->isNotEmpty()) {
+                // Generar archivo de feedback con errores
+                $failures = $import->failures();
+                $feedbackFile = 'failed_rows_' . now()->timestamp . '.xlsx';
+                Excel::store(new FailedRowsExport($failures, $password), $feedbackFile, 'local');
+            }
+            return redirect()->route('users.index');
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            return response()->json(['message' => 'Ocurrió un error durante la importación.', 'errors' => $e->getMessage()]);
+        }
+    }
+
 
     public function create(): View
     {

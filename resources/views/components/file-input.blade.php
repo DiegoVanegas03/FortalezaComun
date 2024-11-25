@@ -1,9 +1,10 @@
-@props(['input_id', 'types'])
+@props(['input_id', 'types', 'error'])
 <label id="drop-area-{{ $input_id }}" for="{{ $input_id }}" ondrop="handleDrop(event)"
     ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)"
     class="flex cursor-pointer flex-col card  rounded-lg max-w-2xl w-full h-60 p-10 group text-center">
-    <input required id="{{ $input_id }}" type="file" class="hidden" accept="{{ $types }}"
-        name="{{ $input_id }}">
+
+    <input id="{{ $input_id }}" type="file" class="hidden" accept="{{ $types }}" name="{{ $input_id }}">
+
     <div id="originalContent-{{ $input_id }}" class="h-full w-full">
         {{ $slot }}
     </div>
@@ -11,7 +12,7 @@
         <div class="h-full w-full text-left flex flex-col gap-3 items-center justify-center text-gray-500 text-xs">
             <p></p>
         </div>
-        <x-danger-button class=" justify-center" onclick="eliminararchivo()">
+        <x-danger-button type="button" class="justify-center" onclick="eliminararchivo()">
             Eliminar este archivo
         </x-danger-button>
     </div>
@@ -36,7 +37,7 @@
             originalContent.classList.remove('hidden');
             const infoFile = document.getElementById('info-file-{{ $input_id }}');
             infoFile.classList.add('hidden');
-            document.getElementById("{{ $input_id }}").removeAttribute("disabled");
+            document.getElementById('drop-area-{{ $input_id }}').setAttribute('for', '{{ $input_id }}');
         }
 
         function handleFileChange(event) {
@@ -52,7 +53,7 @@
                 <strong class ='text-sm'>Tipo:</strong> ${files[0].type}`;
             // Mostrar el área de información del archivo
             infoFile.classList.remove('hidden');
-            document.getElementById("{{ $input_id }}").setAttribute("disabled", "true");
+            document.getElementById('drop-area-{{ $input_id }}').setAttribute('for', '');
         }
 
         // Maneja el drop del archivo
