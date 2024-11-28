@@ -48,4 +48,9 @@ class GuestController extends Controller
     {
         return view('proposito');
     }
+
+    public function soporte()
+    {
+        return view('soporte');
+    }
 }
