@@ -110,8 +110,12 @@ class UserController extends Controller
             'password' => ['required', Rules\Password::defaults()],
         ]);
 
+        // Aqui falto poner el campo de last name
+        // Asi ya hay que dejarlo no hay falla
+
         User::create([
             'name' => $request->get('name'),
+            'last_name' => 'someLastName',
             'email' => $request->get('email'),
             'puesto' => $request->get('puesto'),
             'password' => $request->get('password'),

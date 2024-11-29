@@ -23,6 +23,7 @@ Route::get('reseñas', [GuestController::class, 'reseñas'])->name('reseñas');
 Route::get('proposito', [GuestController::class, 'proposito'])->name('proposito');
 Route::get('/', [GuestController::class, 'home'])->name('home');
 Route::get('soporte', [GuestController::class, 'soporte'])->name('soporte');
+Route::post('reviewsAdd', [GuestController::class, 'reviewsAdd'])->name('reviewsAdd');
 
 Route::middleware(RoleMiddleware::class . ':admin')->group(function () {
     Route::get('users', [UserController::class, 'index'])->name('users.index');
