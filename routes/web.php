@@ -36,9 +36,10 @@ Route::middleware(RoleMiddleware::class . ':admin')->group(function () {
 
     Route::get('forms', [FormController::class, 'index'])->name('forms.index');
     Route::get('forms/add', [FormController::class, 'create'])->name('forms.add');
+    Route::get('forms/edit/{id}', [FormController::class, 'edit'])->name('forms.edit');
     Route::post('forms/add', [FormController::class, 'store'])->name('forms.register');
     Route::delete('forms', [FormController::class, 'destroy'])->name('forms.delete');
-    Route::get('forms/{id}', [FormController::class, 'previsualizer'])->name('forms.previsualizer');
+    Route::get('forms/preview/{id}', [FormController::class, 'previsualizer'])->name('forms.previsualizer');
 });
 
 Route::middleware('auth')->group(function () {

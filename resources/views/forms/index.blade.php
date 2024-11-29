@@ -3,7 +3,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="flex py-2">
                 <h1 class="text-2xl flex-1 uppercase tracking-widest">Formularios creados</h1>
-                <a href="{{route('forms.add')}}">
+                <a href="{{ route('forms.add') }}">
                     <x-secondary-button>
                         {{ __('Agregar un nuevo formulario.') }}
                     </x-secondary-button>
@@ -14,51 +14,57 @@
                     <div class="min-w-full align-middle">
                         <table class="min-w-full divide-y divide-gray-200 border">
                             <thead>
-                            <tr class=" bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                <th class="px-6 py-3">
-                                    Nombre
-                                </th>
-                                <th class="px-6 py-3">
-                                    Descripcion
-                                </th>
-                                <th class="px-6 py-3">
-                                    Número de preguntas
-                                </th>
-                                <th class="px-6 py-3">
-                                    Número de respuestas
-                                </th>
-                                <th class="px-6 py-3">
-                                    Acciones
-                                </th>
-                            </tr>
+                                <tr
+                                    class=" bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                    <th class="px-6 py-3">
+                                        Nombre
+                                    </th>
+                                    <th class="px-6 py-3">
+                                        Descripcion
+                                    </th>
+                                    <th class="px-6 py-3">
+                                        Número de preguntas
+                                    </th>
+                                    <th class="px-6 py-3">
+                                        Número de respuestas
+                                    </th>
+                                    <th class="px-6 py-3">
+                                        Acciones
+                                    </th>
+                                </tr>
                             </thead>
 
                             <tbody class="bg-white divide-y divide-gray-200 divide-solid">
-                            @foreach($forms as $form)
-                                <tr class="bg-white whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                    <td class="px-6 py-4 ">
-                                        {{ $form->name }}
-                                    </td>
-                                    <td class="px-6 py-4 ">
-                                        {{ $form->description }}
-                                    </td>
-                                    <td class="px-6 py-4 ">
-                                        {{ $form->fieldsCount() }}
-                                    </td>
-                                    <td class="px-6 py-4 ">
-                                        {{ $form->responsesCount() }}
-                                    </td>
-                                    <td class="text-center text-base">
-                                        <a class="mr-4 hover:opacity-50" href="{{route('forms.previsualizer',$form->id)}}">
-                                            <i class="fa-regular fa-eye"></i>
-                                        </a>
-                                        <a href="{{route('users.edit',$form->id)}}">
-                                            <i role="button" class="fa-solid fa-pen-to-square hover:opacity-50 mr-4"></i>
-                                        </a>
-                                        <i x-data="" x-on:click.prevent="$dispatch('open-modal', { name: 'prestamo-deletion', id: '{{$form->id}}' })" role="button" class="fa-solid fa-trash hover:opacity-50 text-red-500"></i>
-                                    </td>
-                                </tr>
-                            @endforeach
+                                @foreach ($forms as $form)
+                                    <tr class="bg-white whitespace-no-wrap text-sm leading-5 text-gray-900">
+                                        <td class="px-6 py-4 ">
+                                            {{ $form->name }}
+                                        </td>
+                                        <td class="px-6 py-4 ">
+                                            {{ $form->description }}
+                                        </td>
+                                        <td class="px-6 py-4 ">
+                                            {{ $form->fieldsCount() }}
+                                        </td>
+                                        <td class="px-6 py-4 ">
+                                            {{ $form->responsesCount() }}
+                                        </td>
+                                        <td class="text-center text-base">
+                                            <a class="mr-4 hover:opacity-50"
+                                                href="{{ route('forms.previsualizer', $form->id) }}">
+                                                <i class="fa-regular fa-eye"></i>
+                                            </a>
+                                            <a href="{{ route('forms.edit', $form->id) }}">
+                                                <i role="button"
+                                                    class="fa-solid fa-pen-to-square hover:opacity-50 mr-4"></i>
+                                            </a>
+                                            <i x-data=""
+                                                x-on:click.prevent="$dispatch('open-modal', { name: 'prestamo-deletion', id: '{{ $form->id }}' })"
+                                                role="button"
+                                                class="fa-solid fa-trash hover:opacity-50 text-red-500"></i>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -87,13 +93,8 @@
             <div class="mt-6">
                 <x-input-label for="password" value="{{ __('Password') }}" class="sr-only" />
 
-                <x-text-input
-                    id="password"
-                    name="password"
-                    type="password"
-                    class="mt-1 block w-3/4"
-                    placeholder="{{ __('Password') }}"
-                />
+                <x-text-input id="password" name="password" type="password" class="mt-1 block w-3/4"
+                    placeholder="{{ __('Password') }}" />
 
                 <x-input-error :messages="$errors->userDeletion->get('password')" class="mt-2" />
             </div>
@@ -109,4 +110,4 @@
             </div>
         </form>
     </x-modal>
-</x-app-layout>
+    </x-app-layout>

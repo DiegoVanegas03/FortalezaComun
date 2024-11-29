@@ -23,6 +23,13 @@ class FormController extends Controller
         return view('forms.add');
     }
 
+    public function edit($id): View
+    {
+        $form = Form::findOrFail($id);
+
+        return view('forms.add')->with(compact('form'));
+    }
+
     public function store(Request $request)
     {
         $request->validate([
