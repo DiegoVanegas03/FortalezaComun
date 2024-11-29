@@ -16,8 +16,23 @@ class Reviews extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'idUser',
+        'user_id',
         'review',
         'date'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function rol()
+    {
+        return $this->user()->first()->rol;
+    }
+
+    public function nombre()
+    {
+        return $this->user()->first()->nombreCompleto();
+    }
 }

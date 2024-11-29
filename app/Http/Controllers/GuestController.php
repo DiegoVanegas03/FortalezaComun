@@ -17,13 +17,13 @@ class GuestController extends Controller
         $userId = Auth::id();
 
         // Verificar si el usuario tiene alguna reseña en la tabla `Reviews`
-        $exists = Reviews::where('idUser', $userId)->exists();
+        $exists = Reviews::where('user_id', $userId)->exists();
 
         // Obtener todas las reseñas de la tabla
-        $reviews = Reviews::all()->map(function ($review) {
+        $reviews = Reviews::latest()->take(6)->get()->map(function ($review) {
             // Agregar una foto desde RandomUser.me a cada reseña
             $response = Http::get('https://randomuser.me/api/');
-            $review->photo = $response->json()['results'][0]['picture']['large'];
+            $review['photo'] = $response->json()['results'][0]['picture']['large'];
             return $review;
         });
 
@@ -45,7 +45,7 @@ class GuestController extends Controller
 
         // Crear una nueva reseña
         Reviews::create([
-            'idUser' => $userId,
+            'user_id' => $userId,
             'review' => $validated['review'],
             'date' => now()->toDateString(),
         ]);

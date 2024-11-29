@@ -47,4 +47,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function nombreCompleto()
+    {
+        return $this->name . ' ' . $this->last_name;
+    }
 }
