@@ -3,13 +3,17 @@
         <div class="max-w-7xl mx-auto p-6 drop-shadow-xl bg-white rounded-lg">
             <h1 class="text-2xl uppercase font-medium tracking-widest mb-6">Crear Formulario Personalizado</h1>
             <!-- Formulario para crear un nuevo formulario -->
-            <form id="form-create" action="{{ route('forms.register') }}" method="POST">
+            <form id="form-create" action="{{ route($form ? 'forms.update' : 'forms.register') }}" method="POST">
                 @csrf
+                @if ($form)
+                    @method('patch')
+                    <input value="{{ $form->id }}" hidden name="id">
+                @endif
                 <!-- Nombre del formulario -->
                 <div class="mb-4">
                     <x-input-label for="name" :value="__('Nombre del Formulario')" />
-                    <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name', $form->name ?? '')"
-                        required autofocus />
+                    <x-text-input id="name" class="block mt-1 w-full" type="text" name="name"
+                        :value="old('name', $form->name ?? '')" required autofocus />
                     <x-input-error :messages="$errors->get('name')" class="mt-2" />
                 </div>
 
@@ -34,7 +38,8 @@
                     </div>
                 </div>
                 <!-- Botón para enviar el formulario -->
-                <x-primary-button type="submit" class="w-full justify-center">Guardar Formulario</x-primary-button>
+                <x-primary-button type="submit"
+                    class="w-full justify-center">{{ $form ? 'Actualizar Formulario' : 'Guardar Formulario' }}</x-primary-button>
             </form>
         </div>
 
@@ -67,7 +72,7 @@
                 <x-text-input class="block mt-1 w-full" type="text" name="fields[__INDEX__][options]"
                     placeholder="Opción1,Opción2,Opción3" />
             </div>
-            <div class="flex justify-between items-center px-4">
+            <div class="flex justify-between items-center px-4 required-container">
                 <label class="flex gap-1 items-center">
                     <input type="checkbox" class="rounded" name="fields[__INDEX__][required]">
                     <x-input-label class="whitespace-nowrap" :value="__('Requerido')" />
@@ -85,7 +90,7 @@
             let countFields = 0;
 
             // Función para agregar un nuevo campo
-            addFieldButton.addEventListener('click', addField);
+            addFieldButton.addEventListener('click', () => addField());
 
             function addField(element = null) {
                 const newField = fieldTemplate.cloneNode(true);
@@ -98,8 +103,20 @@
                 tempDiv.innerHTML = updatedHTML;
                 const fieldElement = tempDiv.firstElementChild;
 
-                if (element && element.type == "select") {
-                    tempDiv.querySelector('.options - container').classList.remove('hidden');
+                if (element) {
+                    const inputId = document.createElement('input');
+                    inputId.setAttribute('hidden', true);
+                    inputId.setAttribute('value', element.id);
+                    inputId.name = `fields[${countFields}][id]`;
+                    fieldElement.appendChild(inputId);
+                    fieldElement.querySelector('input').value = element.label;
+                    fieldElement.querySelector('select').value = element.type;
+                    tempDiv.querySelector('.required-container input').checked = element.required == 1;
+                    if (element.type == "select") {
+                        const optionsContainer = tempDiv.querySelector('.options-container');
+                        optionsContainer.classList.remove('hidden');
+                        optionsContainer.querySelector('input').value = element.options;
+                    }
                 }
 
                 // Añadir evento para mostrar las opciones cuando sea select o radio
@@ -123,11 +140,11 @@
                 fieldsContainer.appendChild(fieldElement);
                 countFields++;
             }
-            @if ($form->fieldsCount() > 0)
+            @if ($form && $form->fieldsCount() > 0)
                 const fields = @json($form->fields()->get());
-                console.log(fields);
                 fields.forEach(element => {
                     addField(element);
+                    console.log(element);
                 });
             @endif
         });

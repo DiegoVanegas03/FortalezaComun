@@ -78,6 +78,7 @@ class UserController extends Controller
         // Define las reglas de validación
         $columns = [
             'name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'puesto' => ['required', 'string', 'max:200'],
         ];
@@ -105,21 +106,29 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'puesto' => ['required', 'string', 'max:255'],
             'password' => ['required', Rules\Password::defaults()],
         ]);
-
-        // Aqui falto poner el campo de last name
-        // Asi ya hay que dejarlo no hay falla
-
         User::create([
             'name' => $request->get('name'),
-            'last_name' => 'someLastName',
+            'last_name' => $request->get('last_name'),
             'email' => $request->get('email'),
             'puesto' => $request->get('puesto'),
             'password' => $request->get('password'),
         ]);
+        return redirect(route('users.index'));
+    }
+
+    public function destroy(Request $request): RedirectResponse
+    {
+        $request->validateWithBag('userDeletion', [
+            'password' => ['required', 'current_password'],
+        ]);
+        $id = $request->get('id');
+        $form = User::findOrFail($id);
+        $form->delete();
         return redirect(route('users.index'));
     }
 }

@@ -1,5 +1,5 @@
 <x-app-layout>
-    <main class=" pt-[95px] grid lg:grid-cols-2 place-items-center gap-5 h-screen">
+    <main class=" pt-[95px] grid lg:grid-cols-2 place-items-center gap-5 min-h-screen">
         <div class="flex flex-col justify-center text-app-secondary montserrat-light uppercase tracking-widest">
             <p class="text-[2.5rem] md:text-[3rem] tracking-in-contract-bck ">a tu alcance</p>
             <p class="text-[2.5rem]  md:text-[5rem] font-extrabold tracking-in-contract-bck ">FORTALEZA</p>

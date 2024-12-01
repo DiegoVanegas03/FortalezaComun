@@ -81,7 +81,7 @@
         </div>
     </div>
     <x-modal name="prestamo-deletion" :show="$errors->userDeletion->isNotEmpty()" focusable>
-        <form method="post" action="{{ route('home') }}" class="p-6">
+        <form method="post" action="{{ route('users.destroy') }}" class="p-6">
             @csrf
             @method('delete')
             <input name="id" type="number" x-bind:value="formId" hidden />
