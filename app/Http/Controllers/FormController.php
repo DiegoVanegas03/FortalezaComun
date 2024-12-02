@@ -153,7 +153,7 @@ class FormController extends Controller
 
         $fieldsForm = $form->fields()->get();
         foreach ($fieldsForm as $field) {
-            $responseField = $request->get($field->label);
+            $responseField = $request->get(str_replace(' ', '_', $field->label));
             if ($responseField != null) {
                 FormFieldResponse::create([
                     'form_response_id' => $formResponse->id,

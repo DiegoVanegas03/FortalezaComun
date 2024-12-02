@@ -3,6 +3,7 @@
 use App\Http\Controllers\FormController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ChatgptController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\GuestController;
 use App\Http\Middleware\RoleMiddleware;
@@ -37,6 +38,8 @@ Route::middleware(RoleMiddleware::class . ':admin')->group(function () {
 
     Route::get('forms', [FormController::class, 'index'])->name('forms.index');
     Route::get('forms/add', [FormController::class, 'create'])->name('forms.add');
+    Route::get('forms/analyze/{formId}', [ChatgptController::class, 'analyzeForm'])->name('forms.analyze.form');
+    Route::get('forms/analyze', [ChatgptController::class, 'index'])->name('forms.analyze');
     Route::get('forms/edit/{id}', [FormController::class, 'edit'])->name('forms.edit');
     Route::get('forms/notify/{id}', [FormController::class, 'notify'])->name('forms.notify');
     Route::patch('forms/edit', [FormController::class, 'update'])->name('forms.update');
