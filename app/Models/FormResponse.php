@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class FormResponse extends Model
 {
     use HasFactory;
-    protected $fillable = ['form_id'];
+    protected $fillable = ['user_id', 'form_id'];
 
     public function form()
     {

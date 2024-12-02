@@ -13,7 +13,11 @@
                 @if ($form->fields->isEmpty())
                     <p>No hay campos registrados en este formulario.</p>
                 @else
-                    <div class="space-y-4">
+                    <form method="POST" action="{{ $permitedAction ? route('forms.response') : '' }}" class="space-y-4">
+                        @csrf
+                        @if ($permitedAction)
+                            <input name="id" value="{{ $form->id }}" hidden>
+                        @endif
                         @foreach ($form->fields as $field)
                             @if ($field->type !== 'select')
                                 <x-input-label :for="$field->label" :value="$field->label" />
@@ -27,9 +31,9 @@
                                 <x-input-error :messages="$errors->get($field->label)" class="mt-2" />
                             @endif
                         @endforeach
-                    </div>
+                        <x-primary-button class="justify-center h-10 w-full">Enviar respuesta</x-primary-button>
+                    </form>
                 @endif
-                <x-primary-button class="justify-center h-10">Enviar respuesta</x-primary-button>
                 <p class="text-xs text-gray-400">
                     La información proporcionada será utilizada exclusivamente para el análisis y la mejora continua del
                     área de trabajo. Al enviar los datos, otorgas tu consentimiento para su uso conforme a nuestras

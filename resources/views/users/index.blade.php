@@ -56,15 +56,19 @@
                                         <td class="px-6 py-4 ">
                                             {{ $user->puesto }}
                                         </td>
-                                        <td class="text-center text-base">
+                                        <td class="flex gap-4 items-center justify-center text-lg">
                                             <a href="{{ route('users.edit', $user->id) }}">
-                                                <i role="button"
-                                                    class="fa-solid fa-pen-to-square hover:opacity-50 mr-4"></i>
+                                                <x-tooltip message="Editar usuario">
+                                                    <i role="button"
+                                                        class="fa-solid fa-pen-to-square hover:opacity-50 mr-4"></i>
+                                                </x-tooltip>
                                             </a>
-                                            <i x-data=""
-                                                x-on:click.prevent="$dispatch('open-modal', { name: 'prestamo-deletion', id: '{{ $user->id }}' })"
-                                                role="button"
-                                                class="fa-solid fa-trash hover:opacity-50 text-red-500"></i>
+                                            <x-tooltip message="Eliminar" color="bg-danger">
+                                                <i x-data=""
+                                                    x-on:click.prevent="$dispatch('open-modal', { name: 'prestamo-deletion', id: '{{ $user->id }}' })"
+                                                    role="button"
+                                                    class="fa-solid fa-trash hover:opacity-50 text-red-500"></i>
+                                            </x-tooltip>
                                         </td>
                                     </tr>
                                 @endforeach

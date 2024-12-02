@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('form_responses', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('form_id')->constrained()->onDelete('cascade');  // Relación con el formulario
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('form_id')->constrained('forms')->onDelete('cascade');  // Relación con el formulario
             $table->timestamps();
         });
     }

@@ -38,6 +38,7 @@ Route::middleware(RoleMiddleware::class . ':admin')->group(function () {
     Route::get('forms', [FormController::class, 'index'])->name('forms.index');
     Route::get('forms/add', [FormController::class, 'create'])->name('forms.add');
     Route::get('forms/edit/{id}', [FormController::class, 'edit'])->name('forms.edit');
+    Route::get('forms/notify/{id}', [FormController::class, 'notify'])->name('forms.notify');
     Route::patch('forms/edit', [FormController::class, 'update'])->name('forms.update');
     Route::post('forms/add', [FormController::class, 'store'])->name('forms.register');
     Route::delete('forms', [FormController::class, 'destroy'])->name('forms.delete');
@@ -48,6 +49,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('forms/response/${encrypt}', [FormController::class, 'responseShow'])->name('forms.response.show');
+    Route::post('forms/response', [FormController::class, 'response'])->name('forms.response');
 });
 
 require __DIR__ . '/auth.php';

@@ -49,19 +49,32 @@
                                         <td class="px-6 py-4 ">
                                             {{ $form->responsesCount() }}
                                         </td>
-                                        <td class="text-center text-base">
-                                            <a class="mr-4 hover:opacity-50"
-                                                href="{{ route('forms.previsualizer', $form->id) }}">
-                                                <i class="fa-regular fa-eye"></i>
-                                            </a>
-                                            <a href="{{ route('forms.edit', $form->id) }}">
-                                                <i role="button"
-                                                    class="fa-solid fa-pen-to-square hover:opacity-50 mr-4"></i>
-                                            </a>
-                                            <i x-data=""
-                                                x-on:click.prevent="$dispatch('open-modal', { name: 'prestamo-deletion', id: '{{ $form->id }}' })"
-                                                role="button"
-                                                class="fa-solid fa-trash hover:opacity-50 text-red-500"></i>
+                                        <td class="px-2 text-base">
+                                            <div class="flex items-center justify-center gap-4">
+                                                <x-tooltip message="Notificar a los usuarios">
+                                                    <a href="{{ route('forms.notify', $form->id) }}">
+                                                        <i class="fa-regular fa-envelope"></i>
+                                                    </a>
+                                                </x-tooltip>
+                                                <x-tooltip message="Ver previsualización">
+                                                    <a class="mr-4 hover:opacity-50"
+                                                        href="{{ route('forms.previsualizer', $form->id) }}">
+                                                        <i class="fa-regular fa-eye"></i>
+                                                    </a>
+                                                </x-tooltip>
+                                                <x-tooltip message="Editar">
+                                                    <a href="{{ route('forms.edit', $form->id) }}">
+                                                        <i role="button"
+                                                            class="fa-solid fa-pen-to-square hover:opacity-50 mr-4"></i>
+                                                    </a>
+                                                </x-tooltip>
+                                                <x-tooltip message="Eliminar" color="bg-danger">
+                                                    <i x-data=""
+                                                        x-on:click.prevent="$dispatch('open-modal', { name: 'prestamo-deletion', id: '{{ $form->id }}' })"
+                                                        role="button"
+                                                        class="fa-solid fa-trash hover:opacity-50 text-red-500"></i>
+                                                </x-tooltip>
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach
