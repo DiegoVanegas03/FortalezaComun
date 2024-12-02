@@ -30,6 +30,7 @@
         ['label' => 'Inicio', 'route' => 'home', 'icon' => 'fa-solid fa-house'],
         ['label' => 'Usuarios', 'route' => 'users.index', 'icon' => 'fa-solid fa-user'],
         ['label' => 'Formularios', 'route' => 'forms.index', 'icon' => 'fa-solid text-xl fa-clipboard-question'],
+        ['label' => 'Chat-GPT', 'route' => 'gpt.index', 'icon' => 'fa-solid fa-robot'],
     ]">
         {{ $slot }}
     </x-sidebar-navigate>
